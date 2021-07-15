@@ -1,8 +1,15 @@
 import wx
-from wx.core import DefaultPosition, DefaultSize, NullColour, NullFont, TE_MULTILINE, TE_READONLY, TextAttr, ColourDatabase
+from wx.core import DefaultPosition, DefaultSize, NullColour, NullFont, TE_MULTILINE, TE_READONLY, TextAttr, ColourDatabase, VERTICAL
 app = wx.App()
 
-frm = wx.Frame(None, title="Sonny's GUI Calculator")
+screen_width, screen_height = wx.DisplaySize()
+def_width, def_height = DefaultSize
+entry_frm = wx.Frame(None, title = "Enter Expression", pos = wx.Point(0, (screen_height/2) + 130))
+ex_frm = wx.Frame(None, title="Your expressions", pos = wx.Point(((screen_width/2) - 400),0))
+ans_frm = wx.Frame(None, title ="Sonny's answers", pos = wx.Point((screen_width/2),0))
+
+
+helper_frm = wx.Frame(None, title = "What can I compute?", size = DefaultSize)
 
 error_message = "Invalid input! Try again!"
 
@@ -22,17 +29,27 @@ if popup_result == wx.ID_CANCEL:
 text_entry = ""
 expression_style = wx.TE_READONLY | wx.TE_MULTILINE |wx.TE_RICH | wx.TE_PROCESS_ENTER | wx.TE_LEFT
 answer_style = wx.TE_READONLY | wx.TE_MULTILINE |wx.TE_RICH | wx.TE_PROCESS_ENTER | wx.TE_RIGHT
-display_expression = wx.TextCtrl(frm, -1, text_entry, DefaultPosition, DefaultSize , expression_style)
+display_expression = wx.TextCtrl(ex_frm, -1, text_entry, DefaultPosition, DefaultSize , expression_style)
+answer_expression = wx.TextCtrl(ans_frm, -1, text_entry, DefaultPosition, DefaultSize , answer_style)
+
+#help frame
+help_message = "This calculator can compute basic subtraction, addition, multiplication, and division. \
+Currently, we can only support two numbers and one operation"
+help_caption = "What can I compute?"
+help_popup_message = wx.MessageDialog(helper_frm, help_message, help_caption, wx.OK)
+help_popup_result = help_popup_message.ShowModal()
 while 1:
+    a_expression = wx.TextAttr(green, NullColour, NullFont, wx.TEXT_ALIGNMENT_RIGHT)
+    answer_expression.SetStyle(-1, -1, a_expression)
     d_expression = wx.TextAttr(blue, NullColour, NullFont, wx.TEXT_ALIGNMENT_RIGHT)
     display_expression.SetStyle(-1, -1, d_expression)
-    style = display_expression.GetWindowStyle()
-    display_expression.SetWindowStyle(style & ~wx.TEXT_ALIGNMENT_RIGHT | wx.TEXT_ALIGNMENT_LEFT)
+    #style = display_expression.GetWindowStyle()
+    #display_expression.SetWindowStyle(style & ~wx.TEXT_ALIGNMENT_RIGHT | wx.TEXT_ALIGNMENT_LEFT)
     
     entry_message = "Please Enter the Expression You Are Looking to Solve"
     entry_caption = "ENTER EXPRESSION"
     default_value = ""
-    entry = wx.TextEntryDialog(None, entry_message, entry_caption, default_value)
+    entry = wx.TextEntryDialog(entry_frm, entry_message, entry_caption, default_value, pos = wx.Point(0,0))
     #fix the display message, it currently cuts off the last word
     entry_result = entry.ShowModal()    
 
@@ -55,15 +72,19 @@ while 1:
         #and then perform the operation, get the answer, 
 
         answer = "answer!\n"
-        display_expression.AppendText(answer)
+        answer_expression.AppendText(answer)
         
         
         
 
         #wx.StaticText(frm, -1, new_line)
 
-
-    frm.Centre(wx.BOTH)
-    frm.Show()
+    
+    ex_frm.Centre(wx.VERTICAL)
+    ans_frm.Centre(wx.VERTICAL)
+    entry_frm.Centre(wx.HORIZONTAL)
+    entry_frm.Show()
+    ex_frm.Show()
+    ans_frm.Show()
 
 app.MainLoop()
