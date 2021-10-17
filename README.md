@@ -7,4 +7,6 @@ To run:
 4) if running on windows run this command: python calc.py
 5) if running on mac run this command: pythonw calc.py
 
+NOTE: Please make sure to read the welcome messages as that will help you understand what commands you can use and how to represent them!
+
 ENJOY!
