@@ -53,19 +53,13 @@ def div(lst):
 
 def execute(user_text):
     
-    print("user_text before removing white spaces = ", user_text)
     user_text.replace(" ", "")
-    print("user_text after removing white spaces = ", user_text)
-
-    print("len(user_text) =", len(user_text))
+    
     lst_expression = []
     total = 0
     long_num = False
     mult_digit_number = None
     for index, variable in enumerate(user_text):
-        print("index =", index)
-        #if variable == ' ' or variable == '\n':
-          #  continue 
         if (index + 1) < len(user_text):
 
             if (user_text[index + 1] not in operations) and (user_text[index] not in operations):
@@ -75,12 +69,7 @@ def execute(user_text):
                 else:
                     mult_digit_number += user_text[index + 1] 
 
-                print("multi digit = ", mult_digit_number)
                 continue
-        #print(type(user_text))
-        print("variable = ", variable)
-        print("variable type = ", type(variable))
-        print(lst_expression)
         
         for i, op in enumerate(operations):
             op_present = False
@@ -97,11 +86,9 @@ def execute(user_text):
                 break 
         if op_present: 
             continue  
-        #elif variable == ' ':
-          #  continue                  
+             
         try:
-            #if variable == '' or variable == None:
-             #   continue
+    
             if long_num == True:
                 try:
                     num = float(mult_digit_number)
@@ -195,8 +182,8 @@ display_expression = wx.TextCtrl(ex_frm, -1, text_entry, DefaultPosition, Defaul
 answer_expression = wx.TextCtrl(ans_frm, -1, text_entry, DefaultPosition, DefaultSize , style = answer_style)
 
 #help frame
-help_message = "This calculator can compute basic subtraction (-), addition (+), multiplication (x), and division (/). \
-Currently, we can only support two numbers and one operation"
+help_message = "This calculator can compute basic subtraction (-), addition (+), multiplication (x), division (/),\
+and can account for proper order of operations."
 help_caption = "What can I compute?"
 help_popup_message = wx.MessageDialog(helper_frm, help_message, help_caption, wx.OK)
 help_popup_result = help_popup_message.ShowModal()
@@ -212,7 +199,6 @@ while 1:
     entry_caption = "ENTER EXPRESSION"
     default_value = ""
     entry = wx.TextEntryDialog(entry_frm, entry_message, entry_caption, default_value, pos = wx.Point(0,0))
-    #fix the display message, it currently cuts off the last word
     entry_result = entry.ShowModal()    
 
     if entry_result == wx.ID_CANCEL:
@@ -227,7 +213,7 @@ while 1:
         user_text += '\n'
         display_expression.AppendText(user_text)
         display_expression.SetDefaultStyle(TextAttr(green, NullColour, NullFont, wx.TEXT_ALIGNMENT_CENTER))
-        #here is where we should pass the text to a parsing function, 
+        #here is where we pass the text to a parsing function, 
         #and then perform the operation, get the answer 
         
         answer = execute(user_text)
