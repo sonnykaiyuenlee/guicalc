@@ -1,5 +1,7 @@
 Welcome to my first personal project: A GUI Calculator!
 
+Notes from the creator: I made this GUI calculator as a simple, first personal project to get my feet wet in working with new packages, documentation, and understanding the organization that is required in building programs from scratch.  
+
 To run:
 1) Download the repository
 2) navigate to the repository folder
